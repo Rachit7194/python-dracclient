@@ -95,7 +95,9 @@ VirtualDisk = collections.namedtuple(
      'status', 'raid_status', 'span_depth', 'span_length',
      'pending_operations', 'physical_disks'])
 
-NO_FOREIGN_DRIVE = "STOR018"
+NO_FOREIGN_DRIVE_18 = "STOR018"
+
+NO_FOREIGN_DRIVE_54 = "STOR054"
 
 
 class RAIDManagement(object):
@@ -834,7 +836,8 @@ class RAIDManagement(object):
             # A MessageID 'STOR018' indicates no foreign drive was
             # detected. Return a value which informs the caller nothing
             # further needs to be done.
-            if message_id == NO_FOREIGN_DRIVE:
+            if message_id == NO_FOREIGN_DRIVE_18\
+                    or message_id == NO_FOREIGN_DRIVE_54:
                 is_commit_required_value = False
                 is_reboot_required_value = constants.RebootRequired.false
             else:
