@@ -246,9 +246,11 @@ RAIDEnumerations = {
         'ok': load_wsman_xml('physical_disk_view-enum-ok')
     },
     uris.DCIM_VirtualDiskView: {
+        'Raid_Status_ok': load_wsman_xml(
+            'virtual_disk_view-enum-with-raid-status-ok'),
         'ok': load_wsman_xml('virtual_disk_view-enum-ok')
     }
-}
+   }
 
 RAIDInvocations = {
     uris.DCIM_RAIDService: {
