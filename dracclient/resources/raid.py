@@ -82,7 +82,7 @@ PhysicalDisk = collections.namedtuple(
     ['id', 'description', 'controller', 'manufacturer', 'model', 'media_type',
      'interface_type', 'size_mb', 'free_size_mb', 'serial_number',
      'firmware_version', 'status', 'raid_status', 'sas_address',
-     'device_protocol'])
+     'device_protocol', 'drac_bus_number'])
 
 RAIDController = collections.namedtuple(
     'RAIDController', ['id', 'description', 'manufacturer', 'model',
@@ -259,6 +259,11 @@ class RAIDManagement(object):
                                                        uri)
         drac_bus_protocol = self._get_physical_disk_attr(drac_disk,
                                                          'BusProtocol', uri)
+        if uri == uris.DCIM_PCIeSSDView:
+            drac_bus_number = self._get_physical_disk_attr(drac_disk,
+                                                           'Bus', uri)
+        else:
+            drac_bus_number = None
 
         return PhysicalDisk(
             id=fqdd,
@@ -284,7 +289,8 @@ class RAIDManagement(object):
             device_protocol=self._get_physical_disk_attr(drac_disk,
                                                          'DeviceProtocol',
                                                          uri,
-                                                         allow_missing=True))
+                                                         allow_missing=True),
+            drac_bus_number=drac_bus_number)
 
     def _get_physical_disk_attr(self, drac_disk, attr_name, uri,
                                 allow_missing=False):
